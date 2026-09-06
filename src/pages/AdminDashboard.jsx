@@ -1,7 +1,7 @@
-
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../services/supabase";
+import data from "../data/data.json";
 import "./AdminDashboard.css";
 
 function AdminDashboard() {
@@ -12,15 +12,35 @@ function AdminDashboard() {
   const [checkingAdmin, setCheckingAdmin] = useState(true);
   const [updatingId, setUpdatingId] = useState(null);
 
-  useEffect(() => {
-    checkAdmin();
+  // ================================
+  // LOAD APPOINTMENTS
+  // ================================
+
+  const loadAppointments = useCallback(async () => {
+    setLoading(true);
+
+    const { data: appointmentData, error } = await supabase
+      .from("appointments")
+      .select("*")
+      .order("appointment_date", { ascending: true })
+      .order("appointment_time", { ascending: true });
+
+    if (error) {
+      console.error("Error loading appointments:", error);
+      alert("Unable to load appointments.");
+      setAppointments([]);
+    } else {
+      setAppointments(appointmentData || []);
+    }
+
+    setLoading(false);
   }, []);
 
   // ================================
   // CHECK ADMIN ACCESS
   // ================================
 
-  const checkAdmin = async () => {
+  const checkAdmin = useCallback(async () => {
     try {
       const {
         data: { user },
@@ -51,36 +71,17 @@ function AdminDashboard() {
       }
 
       setCheckingAdmin(false);
-      loadAppointments();
+
+      await loadAppointments();
     } catch (error) {
-      console.error(error);
+      console.error("Admin authentication error:", error);
       navigate("/dashboard");
     }
-  };
+  }, [loadAppointments, navigate]);
 
-  // ================================
-  // LOAD APPOINTMENTS
-  // ================================
-
-  const loadAppointments = async () => {
-    setLoading(true);
-
-    const { data, error } = await supabase
-      .from("appointments")
-      .select("*")
-      .order("appointment_date", { ascending: true })
-      .order("appointment_time", { ascending: true });
-
-    if (error) {
-      console.error("Error loading appointments:", error);
-      alert("Unable to load appointments.");
-      setAppointments([]);
-    } else {
-      setAppointments(data || []);
-    }
-
-    setLoading(false);
-  };
+  useEffect(() => {
+    void Promise.resolve().then(checkAdmin);
+  }, [checkAdmin]);
 
   // ================================
   // UPDATE APPOINTMENT STATUS
@@ -145,6 +146,7 @@ function AdminDashboard() {
     const [hours, minutes] = time.split(":");
 
     const date = new Date();
+
     date.setHours(Number(hours));
     date.setMinutes(Number(minutes));
 
@@ -153,6 +155,16 @@ function AdminDashboard() {
       minute: "2-digit",
       hour12: true,
     });
+  };
+
+  // ================================
+  // GET PACKAGE INFORMATION
+  // ================================
+
+  const getPackageInfo = (appointment) => {
+    return data.packages.find(
+      (pkg) => pkg.name === appointment.service_name
+    );
   };
 
   // ================================
@@ -272,7 +284,9 @@ function AdminDashboard() {
             📅
           </div>
 
-          <span>Total Bookings</span>
+          <span>
+            Total Bookings
+          </span>
 
           <strong>
             {totalBookings}
@@ -286,7 +300,9 @@ function AdminDashboard() {
             ⏳
           </div>
 
-          <span>Active Bookings</span>
+          <span>
+            Active Bookings
+          </span>
 
           <strong>
             {bookedCount}
@@ -300,7 +316,9 @@ function AdminDashboard() {
             ✓
           </div>
 
-          <span>Completed</span>
+          <span>
+            Completed
+          </span>
 
           <strong>
             {completedCount}
@@ -314,7 +332,9 @@ function AdminDashboard() {
             ✕
           </div>
 
-          <span>Cancelled</span>
+          <span>
+            Cancelled
+          </span>
 
           <strong>
             {cancelledCount}
@@ -328,7 +348,9 @@ function AdminDashboard() {
             ₹
           </div>
 
-          <span>Total Revenue</span>
+          <span>
+            Total Revenue
+          </span>
 
           <strong>
             ₹{totalRevenue.toLocaleString("en-IN")}
@@ -368,7 +390,9 @@ function AdminDashboard() {
 
         </div>
 
-        {/* LOADING */}
+        {/* ================================
+            LOADING
+        ================================= */}
 
         {loading ? (
 
@@ -384,7 +408,9 @@ function AdminDashboard() {
 
         ) : appointments.length === 0 ? (
 
-          /* EMPTY */
+          /* ================================
+             EMPTY
+          ================================= */
 
           <div className="admin-empty">
 
@@ -404,7 +430,9 @@ function AdminDashboard() {
 
         ) : (
 
-          /* TABLE */
+          /* ================================
+             TABLE
+          ================================= */
 
           <div className="appointment-table-wrapper">
 
@@ -413,7 +441,7 @@ function AdminDashboard() {
               <thead>
 
                 <tr>
-                  <th>Service</th>
+                  <th>Service / Package</th>
                   <th>Date</th>
                   <th>Time</th>
                   <th>Price</th>
@@ -425,128 +453,202 @@ function AdminDashboard() {
 
               <tbody>
 
-                {appointments.map((appointment) => (
+                {appointments.map((appointment) => {
 
-                  <tr key={appointment.id}>
+                  const packageInfo =
+                    getPackageInfo(appointment);
 
-                    {/* SERVICE */}
+                  return (
 
-                    <td>
+                    <tr key={appointment.id}>
 
-                      <div className="service-cell">
+                      {/* ================================
+                          SERVICE / PACKAGE
+                      ================================= */}
 
-                        <strong>
-                          {appointment.service_name}
-                        </strong>
+                      <td>
 
-                        <small>
-                          {appointment.service_duration} min
-                        </small>
+                        <div className="service-cell">
 
-                      </div>
+                          <strong>
+                            {appointment.service_name}
+                          </strong>
 
-                    </td>
+                          <small>
+                            {appointment.service_duration} min
+                          </small>
 
-                    {/* DATE */}
+                          {/* PACKAGE */}
 
-                    <td>
-                      {formatDate(
-                        appointment.appointment_date
-                      )}
-                    </td>
+                          {packageInfo && (
 
-                    {/* TIME */}
-
-                    <td>
-                      {formatTime(
-                        appointment.appointment_time
-                      )}
-                    </td>
-
-                    {/* PRICE */}
-
-                    <td className="price-cell">
-                      ₹
-                      {Number(
-                        appointment.service_price || 0
-                      ).toLocaleString("en-IN")}
-                    </td>
-
-                    {/* STATUS */}
-
-                    <td>
-
-                      <span
-                        className={`status-badge ${
-                          appointment.status || "booked"
-                        }`}
-                      >
-                        {appointment.status || "booked"}
-                      </span>
-
-                    </td>
-
-                    {/* ACTION */}
-
-                    <td>
-
-                      <div className="action-buttons">
-
-                        {appointment.status === "booked" && (
-                          <>
-                            <button
-                              className="complete-btn"
-                              disabled={
-                                updatingId === appointment.id
-                              }
-                              onClick={() =>
-                                updateStatus(
-                                  appointment.id,
-                                  "completed"
-                                )
-                              }
+                            <div
+                              className="package-services"
+                              style={{
+                                marginTop: "8px"
+                              }}
                             >
-                              {updatingId === appointment.id
-                                ? "..."
-                                : "Complete"}
-                            </button>
 
-                            <button
-                              className="cancel-btn"
-                              disabled={
-                                updatingId === appointment.id
-                              }
-                              onClick={() =>
-                                updateStatus(
-                                  appointment.id,
-                                  "cancelled"
+                              <span
+                                style={{
+                                  display: "block",
+                                  fontWeight: "600",
+                                  marginBottom: "4px"
+                                }}
+                              >
+                                Package includes:
+                              </span>
+
+                              {packageInfo.services.map(
+                                (serviceName) => (
+
+                                  <small
+                                    key={serviceName}
+                                    style={{
+                                      display: "block"
+                                    }}
+                                  >
+                                    ✓ {serviceName}
+                                  </small>
+
                                 )
-                              }
-                            >
-                              Cancel
-                            </button>
-                          </>
+                              )}
+
+                            </div>
+
+                          )}
+
+                        </div>
+
+                      </td>
+
+                      {/* ================================
+                          DATE
+                      ================================= */}
+
+                      <td>
+                        {formatDate(
+                          appointment.appointment_date
                         )}
+                      </td>
 
-                        {appointment.status === "completed" && (
-                          <span className="finished-text">
-                            ✓ Completed
-                          </span>
+                      {/* ================================
+                          TIME
+                      ================================= */}
+
+                      <td>
+                        {formatTime(
+                          appointment.appointment_time
                         )}
+                      </td>
 
-                        {appointment.status === "cancelled" && (
-                          <span className="cancelled-text">
-                            Cancelled
-                          </span>
-                        )}
+                      {/* ================================
+                          PRICE
+                      ================================= */}
 
-                      </div>
+                      <td className="price-cell">
 
-                    </td>
+                        ₹
+                        {Number(
+                          appointment.service_price || 0
+                        ).toLocaleString("en-IN")}
 
-                  </tr>
+                      </td>
 
-                ))}
+                      {/* ================================
+                          STATUS
+                      ================================= */}
+
+                      <td>
+
+                        <span
+                          className={`status-badge ${
+                            appointment.status || "booked"
+                          }`}
+                        >
+                          {appointment.status || "booked"}
+                        </span>
+
+                      </td>
+
+                      {/* ================================
+                          ACTION
+                      ================================= */}
+
+                      <td>
+
+                        <div className="action-buttons">
+
+                          {appointment.status === "booked" && (
+
+                            <>
+
+                              <button
+                                className="complete-btn"
+                                disabled={
+                                  updatingId ===
+                                  appointment.id
+                                }
+                                onClick={() =>
+                                  updateStatus(
+                                    appointment.id,
+                                    "completed"
+                                  )
+                                }
+                              >
+                                {updatingId ===
+                                appointment.id
+                                  ? "..."
+                                  : "Complete"}
+                              </button>
+
+                              <button
+                                className="cancel-btn"
+                                disabled={
+                                  updatingId ===
+                                  appointment.id
+                                }
+                                onClick={() =>
+                                  updateStatus(
+                                    appointment.id,
+                                    "cancelled"
+                                  )
+                                }
+                              >
+                                Cancel
+                              </button>
+
+                            </>
+
+                          )}
+
+                          {appointment.status ===
+                            "completed" && (
+
+                            <span className="finished-text">
+                              ✓ Completed
+                            </span>
+
+                          )}
+
+                          {appointment.status ===
+                            "cancelled" && (
+
+                            <span className="cancelled-text">
+                              Cancelled
+                            </span>
+
+                          )}
+
+                        </div>
+
+                      </td>
+
+                    </tr>
+
+                  );
+
+                })}
 
               </tbody>
 
@@ -575,4 +677,3 @@ function AdminDashboard() {
 }
 
 export default AdminDashboard;
-

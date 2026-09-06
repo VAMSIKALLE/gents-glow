@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../services/supabase";
 import data from "../data/data.json";
@@ -11,11 +11,7 @@ function Dashboard() {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        checkUser();
-    }, []);
-
-    const checkUser = async () => {
+    const checkUser = useCallback(async () => {
         try {
             const {
                 data: { user },
@@ -34,7 +30,11 @@ function Dashboard() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [navigate]);
+
+    useEffect(() => {
+        void Promise.resolve().then(checkUser);
+    }, [checkUser]);
 
     const handleLogout = async () => {
         try {
@@ -48,7 +48,7 @@ function Dashboard() {
     const handleBookService = (service) => {
         navigate("/booking", {
             state: {
-                service: service,
+                package : service,
             },
         });
     };
