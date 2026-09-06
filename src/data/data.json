@@ -1,0 +1,138 @@
+
+{
+  "salon": {
+    "name": "Gent's Glow",
+    "tagline": "Look Sharp. Feel Confident.",
+    "description": "Premium men's grooming and beauty services designed for the modern gentleman."
+  },
+
+  "services": [
+    {
+      "id": 1,
+      "name": "Classic Haircut",
+      "category": "Hair",
+      "price": 250,
+      "duration": "30 min",
+      "description": "Professional haircut with styling.",
+      "image": "https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=900&q=85"
+    },
+    {
+      "id": 2,
+      "name": "Premium Hair Styling",
+      "category": "Hair",
+      "price": 400,
+      "duration": "45 min",
+      "description": "Modern styling for a sharp and confident look.",
+      "image": "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=900&q=85"
+    },
+    {
+      "id": 3,
+      "name": "Beard Trim",
+      "category": "Beard",
+      "price": 180,
+      "duration": "20 min",
+      "description": "Precision beard trimming and shaping.",
+      "image": "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=900&q=85"
+    },
+    {
+      "id": 4,
+      "name": "Royal Shave",
+      "category": "Beard",
+      "price": 250,
+      "duration": "30 min",
+      "description": "Classic luxurious shaving experience.",
+      "image": "https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=900&q=85"
+    },
+    {
+      "id": 5,
+      "name": "Premium Facial",
+      "category": "Face",
+      "price": 600,
+      "duration": "45 min",
+      "description": "Deep cleansing and refreshing facial treatment.",
+      "image": "https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=900&q=85"
+    },
+    {
+      "id": 6,
+      "name": "Cleanup",
+      "category": "Face",
+      "price": 350,
+      "duration": "30 min",
+      "description": "Complete face cleanup for fresh-looking skin.",
+      "image": "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=900&q=85"
+    },
+    {
+      "id": 7,
+      "name": "Head Massage",
+      "category": "Spa",
+      "price": 300,
+      "duration": "30 min",
+      "description": "Relaxing head and scalp massage.",
+      "image": "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=900&q=85"
+    },
+    {
+      "id": 8,
+      "name": "Hair Spa",
+      "category": "Spa",
+      "price": 700,
+      "duration": "60 min",
+      "description": "Nourishing hair spa treatment.",
+      "image": "https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=900&q=85"
+    },
+    {
+      "id": 9,
+      "name": "Manicure",
+      "category": "Hands & Feet",
+      "price": 400,
+      "duration": "40 min",
+      "description": "Professional men's manicure.",
+      "image": "https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=900&q=85"
+    },
+    {
+      "id": 10,
+      "name": "Pedicure",
+      "category": "Hands & Feet",
+      "price": 500,
+      "duration": "45 min",
+      "description": "Relaxing and refreshing pedicure.",
+      "image": "https://images.unsplash.com/photo-1519014816548-bf5fe059798b?auto=format&fit=crop&w=900&q=85"
+    }
+  ],
+
+  "packages": [
+    {
+      "id": 1,
+      "name": "Gentleman's Package",
+      "price": 999,
+      "services": [
+        "Classic Haircut",
+        "Beard Trim",
+        "Cleanup"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Royal Grooming",
+      "price": 1499,
+      "services": [
+        "Premium Hair Styling",
+        "Royal Shave",
+        "Premium Facial",
+        "Head Massage"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Complete Makeover",
+      "price": 1999,
+      "services": [
+        "Premium Hair Styling",
+        "Beard Trim",
+        "Premium Facial",
+        "Hair Spa",
+        "Manicure"
+      ]
+    }
+  ]
+}
+

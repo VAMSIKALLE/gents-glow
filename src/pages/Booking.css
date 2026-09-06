@@ -1,0 +1,822 @@
+
+/* =========================================================
+   GENT'S GLOW — PREMIUM BOOKING PAGE
+   ========================================================= */
+
+.booking-page {
+  min-height: 100vh;
+
+  padding: 45px 20px 80px;
+
+  color: #fff;
+
+  position: relative;
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      rgba(7, 7, 7, 0.95),
+      rgba(7, 7, 7, 0.98)
+    ),
+    url("https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1800&q=85")
+      center / cover no-repeat;
+
+  background-attachment: fixed;
+}
+
+.booking-page::before {
+  content: "";
+
+  position: fixed;
+
+  width: 500px;
+  height: 500px;
+
+  top: -200px;
+  right: -180px;
+
+  border-radius: 50%;
+
+  background: rgba(212, 165, 116, 0.08);
+
+  filter: blur(100px);
+
+  pointer-events: none;
+}
+
+.booking-page::after {
+  content: "";
+
+  position: fixed;
+
+  width: 400px;
+  height: 400px;
+
+  bottom: -180px;
+  left: -160px;
+
+  border-radius: 50%;
+
+  background: rgba(212, 165, 116, 0.06);
+
+  filter: blur(100px);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   CONTAINER
+   ========================================================= */
+
+.booking-container {
+  max-width: 1050px;
+
+  margin: auto;
+
+  position: relative;
+  z-index: 2;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.back-button {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  background: transparent;
+
+  border: none;
+
+  color: #d4a574;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  margin-bottom: 38px;
+
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.back-button:hover {
+  color: #f0c99c;
+
+  transform: translateX(-4px);
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.booking-header {
+  text-align: center;
+
+  margin-bottom: 55px;
+
+  animation: bookingHeaderAppear 0.7s ease forwards;
+}
+
+.booking-header span {
+  color: #d4a574;
+
+  letter-spacing: 5px;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  text-transform: uppercase;
+}
+
+.booking-header h1 {
+  font-size: clamp(38px, 5vw, 55px);
+
+  line-height: 1;
+
+  letter-spacing: -1.5px;
+
+  margin: 13px 0 15px;
+
+  font-weight: 900;
+}
+
+.booking-header p {
+  color: #888;
+
+  font-size: 14px;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   SERVICE SELECTION
+   ========================================================= */
+
+.service-selection {
+  margin-bottom: 45px;
+}
+
+.service-selection h2 {
+  text-align: center;
+
+  font-size: 25px;
+
+  margin-bottom: 28px;
+
+  font-weight: 800;
+}
+
+.booking-services {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 20px;
+}
+
+
+/* =========================================================
+   BOOKING SERVICE CARDS
+   ========================================================= */
+
+.booking-service-card {
+  position: relative;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(28, 28, 28, 0.97),
+      rgba(18, 18, 18, 0.97)
+    );
+
+  border: 1px solid #303030;
+
+  border-radius: 16px;
+
+  padding: 28px;
+
+  cursor: pointer;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.booking-service-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 12%;
+  right: 12%;
+
+  height: 2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #d4a574,
+      transparent
+    );
+
+  opacity: 0;
+
+  transition: opacity 0.3s ease;
+}
+
+.booking-service-card:hover {
+  transform: translateY(-7px);
+
+  border-color: rgba(212, 165, 116, 0.55);
+
+  box-shadow:
+    0 20px 45px rgba(0, 0, 0, 0.35);
+}
+
+.booking-service-card:hover::before {
+  opacity: 1;
+}
+
+.booking-service-card h3 {
+  margin-bottom: 10px;
+
+  font-size: 18px;
+
+  font-weight: 800;
+}
+
+.booking-service-card p {
+  color: #888;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+.booking-service-card button {
+  margin-top: 20px;
+
+  width: 100%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #dcb07d,
+      #b8864f
+    );
+
+  color: #111;
+
+  border: none;
+
+  padding: 12px 20px;
+
+  border-radius: 8px;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.booking-service-card button:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 25px rgba(184, 134, 79, 0.3);
+}
+
+
+/* =========================================================
+   MAIN BOOKING CARD
+   ========================================================= */
+
+.booking-card {
+  max-width: 720px;
+
+  margin: 0 auto;
+
+  padding: 38px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(26, 26, 26, 0.98),
+      rgba(16, 16, 16, 0.98)
+    );
+
+  border: 1px solid #303030;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.35);
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+.booking-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 15%;
+  right: 15%;
+
+  height: 2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #d4a574,
+      #f0c99c,
+      #d4a574,
+      transparent
+    );
+}
+
+
+/* =========================================================
+   SELECTED SERVICE
+   ========================================================= */
+
+.selected-service {
+  display: flex;
+
+  align-items: center;
+
+  gap: 20px;
+
+  border-bottom: 1px solid #2d2d2d;
+
+  padding-bottom: 28px;
+
+  margin-bottom: 32px;
+}
+
+.selected-service div {
+  flex: 1;
+}
+
+.selected-service span {
+  color: #d4a574;
+
+  font-size: 10px;
+
+  letter-spacing: 2px;
+
+  font-weight: 800;
+
+  text-transform: uppercase;
+}
+
+.selected-service h2 {
+  margin: 7px 0;
+
+  font-size: 22px;
+
+  font-weight: 800;
+}
+
+.selected-service p {
+  color: #888;
+
+  font-size: 13px;
+}
+
+.selected-service strong {
+  color: #d4a574;
+
+  font-size: 25px;
+
+  font-weight: 900;
+
+  white-space: nowrap;
+}
+
+.selected-service button {
+  background: transparent;
+
+  border: 1px solid #444;
+
+  color: #aaa;
+
+  padding: 8px 13px;
+
+  border-radius: 7px;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+.selected-service button:hover {
+  border-color: #d4a574;
+
+  color: #d4a574;
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.form-group {
+  margin-bottom: 28px;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: #ddd;
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+.form-group input {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 15px 16px;
+
+  background: #101010;
+
+  border: 1px solid #3a3a3a;
+
+  border-radius: 10px;
+
+  color: #fff;
+
+  font-size: 14px;
+
+  outline: none;
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.form-group input:hover {
+  border-color: #555;
+}
+
+.form-group input:focus {
+  border-color: #b8864f;
+
+  background: #121212;
+
+  box-shadow:
+    0 0 0 4px rgba(184, 134, 79, 0.1);
+}
+
+.form-group input::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   TIME SLOTS
+   ========================================================= */
+
+.time-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 10px;
+}
+
+.time-slot {
+  padding: 12px 8px;
+
+  background: #101010;
+
+  border: 1px solid #3b3b3b;
+
+  color: #ccc;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.2s ease;
+}
+
+.time-slot:hover {
+  border-color: #d4a574;
+
+  color: #d4a574;
+
+  transform: translateY(-2px);
+}
+
+.time-slot.selected {
+  background:
+    linear-gradient(
+      135deg,
+      #dfb27f,
+      #b8864f
+    );
+
+  color: #111;
+
+  border-color: #d4a574;
+
+  box-shadow:
+    0 8px 20px rgba(184, 134, 79, 0.2);
+}
+
+
+/* =========================================================
+   CONFIRM BUTTON
+   ========================================================= */
+
+.confirm-button {
+  width: 100%;
+
+  padding: 16px;
+
+  margin-top: 5px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e1b47f,
+      #b8864f
+    );
+
+  color: #111;
+
+  border: none;
+
+  border-radius: 10px;
+
+  font-size: 14px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.3px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 12px 30px rgba(184, 134, 79, 0.22);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.confirm-button:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 17px 35px rgba(184, 134, 79, 0.35);
+}
+
+.confirm-button:active {
+  transform: translateY(0);
+}
+
+.confirm-button:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   MESSAGES
+   ========================================================= */
+
+.booking-message {
+  padding: 14px 16px;
+
+  border-radius: 9px;
+
+  margin-bottom: 20px;
+
+  text-align: center;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  animation: messageAppear 0.3s ease;
+}
+
+.booking-message.success {
+  background: rgba(48, 130, 79, 0.12);
+
+  border: 1px solid rgba(83, 180, 113, 0.2);
+
+  color: #7ee2a8;
+}
+
+.booking-message.error {
+  background: rgba(170, 55, 55, 0.12);
+
+  border: 1px solid rgba(220, 90, 90, 0.2);
+
+  color: #ff9999;
+}
+
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes bookingHeaderAppear {
+  from {
+    opacity: 0;
+
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+@keyframes messageAppear {
+  from {
+    opacity: 0;
+
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 850px) {
+  .booking-services {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .booking-card {
+    max-width: 700px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+  .booking-page {
+    padding: 30px 15px 60px;
+
+    background-attachment: scroll;
+  }
+
+  .back-button {
+    margin-bottom: 28px;
+  }
+
+  .booking-header {
+    margin-bottom: 40px;
+  }
+
+  .booking-header h1 {
+    font-size: 34px;
+  }
+
+  .booking-header p {
+    font-size: 13px;
+  }
+
+  .booking-services {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-service-card {
+    padding: 24px;
+  }
+
+  .booking-card {
+    padding: 25px 20px;
+
+    border-radius: 16px;
+  }
+
+  .selected-service {
+    gap: 14px;
+
+    align-items: flex-start;
+
+    flex-wrap: wrap;
+  }
+
+  .selected-service div {
+    min-width: 150px;
+  }
+
+  .selected-service strong {
+    font-size: 22px;
+  }
+
+  .time-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 400px) {
+  .booking-page {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .booking-header h1 {
+    font-size: 30px;
+  }
+
+  .booking-card {
+    padding: 22px 16px;
+  }
+
+  .selected-service h2 {
+    font-size: 19px;
+  }
+
+  .time-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .time-slot {
+    padding: 11px 6px;
+  }
+
+  .confirm-button {
+    padding: 14px;
+  }
+}
+

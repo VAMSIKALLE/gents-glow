@@ -1,0 +1,606 @@
+
+/* =========================================
+   GENT'S GLOW - GLOBAL & AUTH STYLES
+   Premium Men's Grooming Theme
+========================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family:
+    "Inter",
+    "Segoe UI",
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  background: #0b0b0b;
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* =========================================
+   AUTH PAGE
+========================================= */
+
+.auth-page {
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 40px 20px;
+
+  position: relative;
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(5, 5, 5, 0.92),
+      rgba(18, 15, 11, 0.82)
+    ),
+    url("https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=1800&q=85")
+      center / cover no-repeat;
+
+  background-attachment: fixed;
+}
+
+/* Ambient gold glow */
+
+.auth-page::before {
+  content: "";
+
+  position: absolute;
+
+  width: 500px;
+  height: 500px;
+
+  background: rgba(212, 165, 116, 0.12);
+
+  border-radius: 50%;
+
+  filter: blur(100px);
+
+  top: -200px;
+  right: -150px;
+
+  pointer-events: none;
+}
+
+.auth-page::after {
+  content: "";
+
+  position: absolute;
+
+  width: 400px;
+  height: 400px;
+
+  background: rgba(212, 165, 116, 0.08);
+
+  border-radius: 50%;
+
+  filter: blur(100px);
+
+  bottom: -180px;
+  left: -150px;
+
+  pointer-events: none;
+}
+
+/* =========================================
+   AUTH CARD
+========================================= */
+
+.auth-card {
+  width: 100%;
+  max-width: 470px;
+
+  position: relative;
+  z-index: 2;
+
+  padding: 48px 44px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.98),
+      rgba(248, 245, 241, 0.97)
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.45);
+
+  border-radius: 22px;
+
+  box-shadow:
+    0 35px 90px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(212, 165, 116, 0.08);
+
+  animation: authCardAppear 0.7s ease forwards;
+}
+
+/* Gold top line */
+
+.auth-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 12%;
+  right: 12%;
+
+  height: 2px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #d4a574,
+    #f1d0a7,
+    #d4a574,
+    transparent
+  );
+
+  border-radius: 0 0 10px 10px;
+}
+
+/* =========================================
+   LOGO
+========================================= */
+
+.auth-logo {
+  text-align: center;
+
+  font-size: 25px;
+
+  font-weight: 900;
+
+  letter-spacing: 4px;
+
+  color: #151515;
+
+  margin-bottom: 8px;
+}
+
+.auth-logo span {
+  color: #b8864f;
+}
+
+/* =========================================
+   SUBTITLE
+========================================= */
+
+.auth-subtitle {
+  text-align: center;
+
+  color: #9b6d3e;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 2.5px;
+
+  text-transform: uppercase;
+
+  margin-bottom: 32px;
+}
+
+/* =========================================
+   HEADINGS
+========================================= */
+
+.auth-card h1 {
+  text-align: center;
+
+  color: #171717;
+
+  font-size: 34px;
+
+  line-height: 1.15;
+
+  font-weight: 800;
+
+  letter-spacing: -0.8px;
+
+  margin-bottom: 10px;
+}
+
+.auth-description {
+  text-align: center;
+
+  color: #777;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+
+  margin-bottom: 30px;
+}
+
+/* =========================================
+   FORM
+========================================= */
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #292929;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.2px;
+}
+
+.form-group input {
+  width: 100%;
+
+  padding: 15px 16px;
+
+  border: 1px solid #ded9d3;
+
+  border-radius: 11px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #222;
+
+  font-size: 15px;
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.2s ease;
+}
+
+.form-group input::placeholder {
+  color: #aaa;
+}
+
+.form-group input:hover {
+  border-color: #cbb69f;
+}
+
+.form-group input:focus {
+  border-color: #b8864f;
+
+  box-shadow:
+    0 0 0 4px rgba(184, 134, 79, 0.12),
+    0 5px 18px rgba(0, 0, 0, 0.05);
+
+  transform: translateY(-1px);
+}
+
+/* =========================================
+   SUBMIT BUTTON
+========================================= */
+
+.auth-submit {
+  width: 100%;
+
+  padding: 15px 20px;
+
+  margin-top: 8px;
+
+  border: none;
+
+  border-radius: 11px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #d4a574,
+      #b8864f
+    );
+
+  color: #ffffff;
+
+  font-size: 15px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.5px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 10px 25px rgba(184, 134, 79, 0.28);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.auth-submit:hover {
+  background:
+    linear-gradient(
+      135deg,
+      #e1b889,
+      #c5955f
+    );
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 15px 32px rgba(184, 134, 79, 0.38);
+}
+
+.auth-submit:active {
+  transform: translateY(0);
+}
+
+.auth-submit:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+/* =========================================
+   ERROR MESSAGE
+========================================= */
+
+.auth-error {
+  padding: 13px 15px;
+
+  margin-bottom: 20px;
+
+  border-radius: 10px;
+
+  background: #fff1f1;
+
+  border: 1px solid #f2caca;
+
+  border-left: 4px solid #c94c4c;
+
+  color: #a33131;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+
+  animation: messageAppear 0.3s ease;
+}
+
+/* =========================================
+   SUCCESS MESSAGE
+========================================= */
+
+.auth-success {
+  padding: 13px 15px;
+
+  margin-bottom: 20px;
+
+  border-radius: 10px;
+
+  background: #f1faf4;
+
+  border: 1px solid #c8e8d2;
+
+  border-left: 4px solid #3e9c61;
+
+  color: #287044;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+
+  animation: messageAppear 0.3s ease;
+}
+
+/* =========================================
+   OLD MESSAGE CLASS
+========================================= */
+
+.auth-message {
+  background: #f8f5f1;
+
+  border-left: 4px solid #b8864f;
+
+  padding: 13px 15px;
+
+  margin-bottom: 20px;
+
+  border-radius: 8px;
+
+  color: #555;
+
+  font-size: 13px;
+}
+
+/* =========================================
+   AUTH SWITCH
+========================================= */
+
+.auth-switch {
+  text-align: center;
+
+  margin-top: 24px;
+
+  color: #777;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+.auth-switch a {
+  color: #a87543;
+
+  font-weight: 800;
+
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.auth-switch a:hover {
+  color: #7e562f;
+
+  text-decoration: underline;
+}
+
+/* =========================================
+   BACK HOME
+========================================= */
+
+.back-home {
+  display: block;
+
+  text-align: center;
+
+  margin-top: 22px;
+
+  color: #999;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.back-home:hover {
+  color: #a87543;
+
+  transform: translateX(-2px);
+}
+
+/* =========================================
+   AUTH FOOTER
+========================================= */
+
+.auth-footer {
+  text-align: center;
+
+  margin-top: 25px;
+
+  color: #777;
+
+  font-size: 13px;
+}
+
+.auth-footer a {
+  color: #b8864f;
+
+  font-weight: bold;
+
+  text-decoration: none;
+}
+
+.auth-footer a:hover {
+  color: #8f6339;
+}
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes authCardAppear {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(25px)
+      scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+@keyframes messageAppear {
+  from {
+    opacity: 0;
+
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 550px) {
+  .auth-page {
+    padding: 25px 15px;
+
+    background-attachment: scroll;
+  }
+
+  .auth-card {
+    padding: 38px 25px;
+
+    border-radius: 18px;
+  }
+
+  .auth-logo {
+    font-size: 21px;
+
+    letter-spacing: 3px;
+  }
+
+  .auth-card h1 {
+    font-size: 29px;
+  }
+
+  .auth-subtitle {
+    margin-bottom: 27px;
+  }
+}
+
+@media (max-width: 380px) {
+  .auth-card {
+    padding: 32px 20px;
+  }
+
+  .auth-card h1 {
+    font-size: 26px;
+  }
+
+  .form-group input {
+    padding: 13px 14px;
+  }
+
+  .auth-submit {
+    padding: 14px;
+  }
+}
