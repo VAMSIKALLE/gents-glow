@@ -43,7 +43,7 @@ function Booking() {
     "18:30",
     "19:00",
     "19:30",
-    "20:00"
+    "20:00",
   ];
 
   const today = new Date().toISOString().split("T")[0];
@@ -57,9 +57,9 @@ function Booking() {
         .filter(Boolean)
     : [];
 
-  // Calculate package duration
+  // Calculate total package duration
   const packageDuration = packageServices.reduce((total, item) => {
-    return total + parseInt(item.duration);
+    return total + parseInt(item.duration, 10);
   }, 0);
 
   const handleBooking = async (e) => {
@@ -67,11 +67,13 @@ function Booking() {
 
     setMessage("");
 
+    // Validate service/package
     if (!service && !packageItem) {
       setMessage("Please select a service or package.");
       return;
     }
 
+    // Validate date/time
     if (!date || !time) {
       setMessage("Please select date and time.");
       return;
@@ -80,21 +82,32 @@ function Booking() {
     setLoading(true);
 
     try {
-      // Check logged-in user
+      // ------------------------------------------------
+      // CHECK LOGGED-IN USER
+      // ------------------------------------------------
       const {
         data: { user },
-        error: userError
+        error: userError,
       } = await supabase.auth.getUser();
 
-      if (userError || !user) {
+      if (userError) {
+        console.error("User error:", userError);
+        throw userError;
+      }
+
+      if (!user) {
         navigate("/login");
         return;
       }
 
-      // Check whether slot is already booked
+      console.log("Logged-in user:", user.id);
+
+      // ------------------------------------------------
+      // CHECK WHETHER SLOT IS ALREADY BOOKED
+      // ------------------------------------------------
       const {
         data: existingBooking,
-        error: checkError
+        error: checkError,
       } = await supabase
         .from("appointments")
         .select("id")
@@ -104,6 +117,7 @@ function Booking() {
         .limit(1);
 
       if (checkError) {
+        console.error("Slot check error:", checkError);
         throw checkError;
       }
 
@@ -115,9 +129,19 @@ function Booking() {
         return;
       }
 
+      // ------------------------------------------------
       // PACKAGE BOOKING
+      // ------------------------------------------------
       if (packageItem) {
-        const { error } = await supabase
+        console.log("Creating package booking...");
+        console.log("Package:", packageItem.name);
+        console.log("Price:", packageItem.price);
+        console.log("Duration:", packageDuration);
+
+        const {
+          data: newBooking,
+          error: bookingError,
+        } = await supabase
           .from("appointments")
           .insert({
             user_id: user.id,
@@ -126,55 +150,79 @@ function Booking() {
             service_duration: packageDuration,
             appointment_date: date,
             appointment_time: time,
-            status: "booked"
-          });
+            status: "booked",
+          })
+          .select()
+          .single();
 
-        if (error) {
-          throw error;
+        if (bookingError) {
+          console.error("PACKAGE BOOKING ERROR:", bookingError);
+          throw bookingError;
         }
+
+        console.log("PACKAGE BOOKING CREATED:", newBooking);
 
         setMessage("Package booking confirmed successfully! 🎉");
       }
 
+      // ------------------------------------------------
       // INDIVIDUAL SERVICE BOOKING
+      // ------------------------------------------------
       else if (service) {
-        const { error } = await supabase
+        console.log("Creating service booking...");
+        console.log("Service:", service.name);
+        console.log("Price:", service.price);
+        console.log("Duration:", service.duration);
+
+        const {
+          data: newBooking,
+          error: bookingError,
+        } = await supabase
           .from("appointments")
           .insert({
             user_id: user.id,
             service_name: service.name,
             service_price: service.price,
-            service_duration: parseInt(service.duration),
+            service_duration: parseInt(service.duration, 10),
             appointment_date: date,
             appointment_time: time,
-            status: "booked"
-          });
+            status: "booked",
+          })
+          .select()
+          .single();
 
-        if (error) {
-          throw error;
+        if (bookingError) {
+          console.error("SERVICE BOOKING ERROR:", bookingError);
+          throw bookingError;
         }
+
+        console.log("SERVICE BOOKING CREATED:", newBooking);
 
         setMessage("Booking confirmed successfully! 🎉");
       }
 
+      // Clear selected date/time
       setDate("");
       setTime("");
 
+      // Go to dashboard after success
       setTimeout(() => {
         navigate("/dashboard");
       }, 2000);
-
     } catch (error) {
-      console.error(error);
+      console.error("BOOKING ERROR:", error);
+
       setMessage(
-        error.message || "Booking failed. Please try again."
+        error?.message || "Booking failed. Please try again."
       );
     } finally {
       setLoading(false);
     }
   };
 
-  // No service/package selected
+  // ==================================================
+  // NO SERVICE OR PACKAGE SELECTED
+  // ==================================================
   if (!service && !packageItem) {
     return (
       <div className="booking-page">
@@ -219,7 +267,6 @@ function Booking() {
               ))}
 
             </div>
-
           </div>
 
           {/* PACKAGES */}
@@ -252,7 +299,6 @@ function Booking() {
               ))}
 
             </div>
-
           </div>
 
         </div>
@@ -260,6 +306,9 @@ function Booking() {
     );
   }
 
+  // ==================================================
+  // BOOKING FORM
+  // ==================================================
   return (
     <div className="booking-page">
 
@@ -280,7 +329,9 @@ function Booking() {
 
         <div className="booking-card">
 
-          {/* PACKAGE DETAILS */}
+          {/* ==========================================
+              PACKAGE DETAILS
+          ========================================== */}
           {packageItem && (
             <div className="selected-service">
 
@@ -316,7 +367,10 @@ function Booking() {
 
               <button
                 type="button"
-                onClick={() => setPackageItem(null)}
+                onClick={() => {
+                  setPackageItem(null);
+                  setService(null);
+                }}
               >
                 Change
               </button>
@@ -324,7 +378,9 @@ function Booking() {
             </div>
           )}
 
-          {/* INDIVIDUAL SERVICE DETAILS */}
+          {/* ==========================================
+              INDIVIDUAL SERVICE DETAILS
+          ========================================== */}
           {service && !packageItem && (
             <div className="selected-service">
 
@@ -344,7 +400,10 @@ function Booking() {
 
               <button
                 type="button"
-                onClick={() => setService(null)}
+                onClick={() => {
+                  setService(null);
+                  setPackageItem(null);
+                }}
               >
                 Change
               </button>
@@ -352,8 +411,12 @@ function Booking() {
             </div>
           )}
 
+          {/* ==========================================
+              BOOKING FORM
+          ========================================== */}
           <form onSubmit={handleBooking}>
 
+            {/* DATE */}
             <div className="form-group">
 
               <label>Choose Date</label>
@@ -363,10 +426,12 @@ function Booking() {
                 min={today}
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
+                required
               />
 
             </div>
 
+            {/* TIME */}
             <div className="form-group">
 
               <label>Choose Time</label>
@@ -392,6 +457,7 @@ function Booking() {
 
             </div>
 
+            {/* MESSAGE */}
             {message && (
               <div
                 className={
@@ -404,6 +470,7 @@ function Booking() {
               </div>
             )}
 
+            {/* CONFIRM BUTTON */}
             <button
               className="confirm-button"
               type="submit"

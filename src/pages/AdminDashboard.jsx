@@ -230,12 +230,7 @@ function AdminDashboard() {
 
         <div className="admin-nav-right">
 
-          <button
-            onClick={() => navigate("/dashboard")}
-            className="customer-dashboard-btn"
-          >
-            Customer Dashboard
-          </button>
+          {/* Customer Dashboard button removed */}
 
           <button
             className="admin-logout"
@@ -478,7 +473,7 @@ function AdminDashboard() {
                             {appointment.service_duration} min
                           </small>
 
-                          {/* PACKAGE */}
+                          {/* PACKAGE DETAILS */}
 
                           {packageInfo && (
 
@@ -579,6 +574,8 @@ function AdminDashboard() {
 
                         <div className="action-buttons">
 
+                          {/* BOOKED */}
+
                           {appointment.status === "booked" && (
 
                             <>
@@ -622,6 +619,8 @@ function AdminDashboard() {
 
                           )}
 
+                          {/* COMPLETED */}
+
                           {appointment.status ===
                             "completed" && (
 
@@ -630,6 +629,8 @@ function AdminDashboard() {
                             </span>
 
                           )}
+
+                          {/* CANCELLED */}
 
                           {appointment.status ===
                             "cancelled" && (
